@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Website Buttons</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 40px;
+            background-color: #f5f5f7;
+            color: #333;
+        }
+        h2 {
+            color: #1d1d1f;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .site-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            background-color: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .site-button:hover {
+            background-color: #0077ed;
+            transform: translateY(-1px);
+        }
+        .site-button:active {
+            background-color: #0062c3;
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Useful Links</h2>
+    <p>Click any button below to open the website in a new tab:</p>
+    
+    <div id="button-box" class="button-container"></div>
+
+    <script>
+        // 1. Define the array of pairs (Objects with name and url)
+        const websites = [
+            { name: "Bulk volcano plot", url: "https://jeffreytsao.github.io/RonC/bulkvolcano.html" },
+            { name: "Single cell volcano plot", url: "https://jeffreytsao.github.io/RonC/scvolcano.html" },
+        ];
+
+        // 2. Get a reference to the container element
+        const container = document.getElementById('button-box');
+
+        // 3. Loop through the array and generate the buttons
+        websites.forEach(site => {
+            // Create a button element
+            const button = document.createElement('button');
+            
+            // Set the button text to the site name
+            button.textContent = site.name;
+            
+            // Add the CSS class for styling
+            button.classList.add('site-button');
+            
+            // Add the click event listener to open the URL in a new tab
+            button.addEventListener('click', () => {
+                window.open(site.url, '_blank');
+            });
+            
+            // Append the newly created button to the container
+            container.appendChild(button);
+        });
+    </script>
+
+</body>
+</html>
