@@ -104,5 +104,40 @@ document.getElementById('gene-search').addEventListener('keypress', e => {
     if (e.key === 'Enter') { e.preventDefault(); highlightGenes(); }
 });
 </script>
+
+<script>
+// Surface protein genes (cell surface annotation)
+
+// After plot renders, update marker symbols: diamond for surface proteins, circle for others
+window.addEventListener('load', function() {
+    const plotDiv = document.getElementById('volcano-plot');
+    if (!plotDiv || !plotDiv.data) return;
+    
+    const updates = {};
+    plotDiv.data.forEach(function(trace, traceIdx) {
+        if (!trace.text) return;
+        const isSurf = trace.text.map(function(gene) {
+            //return SURFACE_PROTEIN_GENES.has(gene);
+            return isSurface(gene);
+        });
+        const symbols = isSurf.map(function(s) { return s ? 'diamond' : 'circle'; });
+        const sizes = isSurf.map(function(s) { return s ? trace.marker.size * 2 : trace.marker.size; });
+        const customdata = trace.text.map(function(gene) {
+            return isSurface(gene) ? 'Cell surface: ✓' : 'Cell surface: ✗';
+        });
+        const newTemplate = '<b>%{text}</b><br>log2FC: %{x:.2f}<br>-log10(padj): %{y:.1f}<br>%{customdata}<extra></extra>';
+        Plotly.restyle(plotDiv, {
+            'marker.symbol': [symbols],
+            'marker.size': [sizes],
+            'customdata': [customdata],
+            'hovertemplate': newTemplate
+        }, [traceIdx]);
+        //        updates['marker.symbol'] = updates['marker.symbol'] || [];
+        // Use Plotly.restyle per trace
+        //Plotly.restyle(plotDiv, {'marker.symbol': [symbols]}, [traceIdx]);
+    });
+});
+</script>
+
 </body>
 </html>
