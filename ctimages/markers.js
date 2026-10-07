@@ -87,7 +87,7 @@ var STACK_MARKERS = {
       "color": "#0000e1",
       "x": 204.27,
       "y": 205,
-      "z": 2,
+      "z": 1,
       "slice": 2,
       "file": "RONC02.png",
       "xUm": 204.27,
