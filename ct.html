@@ -255,11 +255,11 @@ new MutationObserver(applyTheme).observe(document.documentElement, {attributes: 
    camera's own frame, so there are no poles and no gimbal lock. */
 const orbit = {q: new THREE.Quaternion(), r: 500, target: new THREE.Vector3()};
 function defaultOrientation(){
-  // start from the XZ view, rotate -45° about the X axis, then +30° about the Z axis
+  // start from the XZ view, rotate -45° about the X axis, then +45° about the Z axis
   const xz = new THREE.Quaternion().setFromRotationMatrix(
     new THREE.Matrix4().lookAt(new THREE.Vector3(0, 1, 0), new THREE.Vector3(), new THREE.Vector3(0, 0, -1)));
   const rx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 4);
-  const rz = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI / 6);
+  const rz = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), Math.PI / 4);
   orbit.q.copy(rz).multiply(rx).multiply(xz);
 }
 defaultOrientation();
